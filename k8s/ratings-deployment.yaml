@@ -21,6 +21,15 @@ spec:
         imagePullPolicy: Always
         env:
         - name: SERVICE_VERSION
-          value: v1
+          value: v2
+        - name: MONGO_DB_URL
+          value: mongodb://bookinfo-dev-ratings-mongodb:27017/ratings
+        - name: MONGO_DB_USERNAME
+          value: ratings
+        - name: MONGO_DB_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: bookinfo-dev-ratings-mongodb-secret
+              key: mongodb-password
       imagePullSecrets:
       - name: registry-bookinfo
