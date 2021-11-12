@@ -9,6 +9,6 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
-      - run: docker build -t ghcr.io/[GITHUB_USER]/bookinfo-ratings:dev .
+      - run: docker build -t ghcr.io/winggundamth/bookinfo-ratings:dev .
       - run: docker images
-      - run: docker push ghcr.io/[GITHUB_USER]/bookinfo-ratings:dev
+      - run: docker push ghcr.io/winggundamth/bookinfo-ratings:dev
