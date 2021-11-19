@@ -12,14 +12,14 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
       - name: Git tagging
-        id: git-tag
+        id: git-tagging
         uses: anothrNick/github-tag-action@1.35.0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           CUSTOM_TAG: ${{ github.event.inputs.tag-version }}
           DEFAULT_BUMP: patch
     outputs:
-      tag-version: ${{ steps.git-tag.outputs.new_tag }}
+      tagged-version: ${{ steps.git-tagging.outputs.new_tag }}
   docker-tag:
     needs: git-tag
     runs-on: ubuntu-20.04
@@ -35,4 +35,4 @@ jobs:
         with:
           src: ghcr.io/winggundamth/bookinfo-ratings:uat
           dst: |
-            ghcr.io/winggundamth/bookinfo-ratings:${{needs.git-tag.outputs.tag-version}}
+            ghcr.io/winggundamth/bookinfo-ratings:${{needs.git-tag.outputs.tagged-version}}
