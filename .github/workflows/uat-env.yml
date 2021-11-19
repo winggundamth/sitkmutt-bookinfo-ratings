@@ -1,8 +1,8 @@
-name: dev-env
+name: uat-env
 on:
   push:
     branches:
-      - dev
+      - main
 jobs:
   build:
     runs-on: ubuntu-20.04
@@ -17,7 +17,7 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           push: true
-          tags: ghcr.io/winggundamth/bookinfo-ratings:dev
+          tags: ghcr.io/winggundamth/bookinfo-ratings:uat
   deploy:
     needs: build
     runs-on: ubuntu-20.04
@@ -34,10 +34,10 @@ jobs:
         uses: deliverybot/helm@v1
         with:
           helm: helm3
-          release: bookinfo-dev-ratings
-          namespace: student77-bookinfo-dev
+          release: bookinfo-uat-ratings
+          namespace: student77-bookinfo-uat
           chart: k8s/helm
-          value-files: k8s/helm-values/values-bookinfo-dev-ratings.yaml
+          value-files: k8s/helm-values/values-bookinfo-uat-ratings.yaml
           values: |
             {
               "extraEnv": {
@@ -49,4 +49,4 @@ jobs:
     runs-on: ubuntu-20.04
     steps:
       - name: Run acceptance test
-        run: curl http://sitkmutt.bookinfo.dev.opsta.net/student77/ratings/health | grep "Ratings is good"
+        run: curl http://sitkmutt.bookinfo.uat.opsta.net/student77/ratings/health | grep "Ratings is good"
